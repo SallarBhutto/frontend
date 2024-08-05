@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CustomTextField } from '../../components';
 import { Button, Typography, CardContent, InputAdornment, IconButton } from '@mui/material';
 import { Background, Container, Card } from '../../styles/styles';
@@ -91,9 +91,9 @@ const Login: React.FC = () => {
               )}
               <Button data-testid="submit-button" style={{marginTop: "16px"}} type="submit" variant="contained" color="primary" fullWidth>Sign in</Button>
             </form>
-            {/* <Typography variant="body2" align="center" style={{ marginTop: "16px" }}>
+            <Typography variant="body2" align="center" style={{ marginTop: "16px" }}>
               Don't have an account? <Link to="/signup">Sign up</Link>
-            </Typography> */}
+            </Typography>
           </CardContent>
         </Card>
       </Container>
