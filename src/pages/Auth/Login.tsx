@@ -1,11 +1,11 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CustomTextField } from '../../components';
-import { Button, Typography, CardContent, InputAdornment, Tooltip, IconButton } from '@mui/material';
+import { Button, Typography, CardContent, InputAdornment, IconButton } from '@mui/material';
 import { Background, Container, Card } from '../../styles/styles';
 import { useAuth } from '../../context/AuthContext';
 import { post } from '../../utils/api';
-import { Visibility, VisibilityOff, Info } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 
 const Login: React.FC = () => {

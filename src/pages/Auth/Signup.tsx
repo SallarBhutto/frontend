@@ -1,11 +1,10 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CustomTextField, PasswordField } from '../../components';
-import { Button, Typography, CardContent, InputAdornment, Tooltip, IconButton } from '@mui/material';
+import { Button, Typography, CardContent } from '@mui/material';
 import { Background, Container, Card } from '../../styles/styles';
 import { post } from '../../utils/api';
 import { useAuth } from '../../context/AuthContext';
-import { Visibility, VisibilityOff, Info } from '@mui/icons-material';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -14,7 +13,6 @@ const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
-  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
@@ -58,7 +56,6 @@ const Signup: React.FC = () => {
     }
   };
 
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
 
   return (
     <Background>
