@@ -61,7 +61,7 @@ const Signup: React.FC = () => {
       <Container>
         <Card style={{ backgroundColor: 'white' }}>
           <CardContent>
-            <Typography variant="h4" gutterBottom align="center">Signup</Typography>
+            <Typography variant="h4" gutterBottom align="center">Sign-up</Typography>
             <form onSubmit={handleSubmit}>
               <CustomTextField
                 label="Username"
@@ -103,7 +103,3 @@ const Signup: React.FC = () => {
 }
 
 export default Signup;
-function signinAfterSignup() {
-  throw new Error('Function not implemented.');
-}
-
