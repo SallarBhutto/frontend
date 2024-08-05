@@ -2,6 +2,15 @@ import React, { createContext, useState, useContext, ReactNode, useEffect } from
 import { post } from '../utils/api';
 import { useNavigate } from 'react-router-dom';
 
+/**
+ * AuthContext
+ * 
+ * Provides authentication state and actions through React Context. 
+ * - `AuthProvider` manages authentication state and offers `signin`, `signout`, and `checkAuth` functions.
+ * - `useAuth` hook provides access to the authentication context.
+ * - Handles redirection based on authentication status.
+ */
+
 interface AuthContextType {
   isAuthenticated: boolean;
   signin: () => void;

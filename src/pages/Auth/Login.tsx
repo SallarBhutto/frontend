@@ -1,10 +1,11 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CustomTextField } from '../../components';
-import { Button, Typography, CardContent } from '@mui/material';
+import { Button, Typography, CardContent, InputAdornment, Tooltip, IconButton } from '@mui/material';
 import { Background, Container, Card } from '../../styles/styles';
 import { useAuth } from '../../context/AuthContext';
 import { post } from '../../utils/api';
+import { Visibility, VisibilityOff, Info } from '@mui/icons-material';
 
 
 const Login: React.FC = () => {
@@ -12,11 +13,16 @@ const Login: React.FC = () => {
   const {signin, isAuthenticated} = useAuth();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword); 
 
   const hanldeSignin = async () => {
     try {
       const response = await post('/auth/signin', { email: email, password: password});
       console.log('Response:', response.data);
+      return response;
     } catch (error) {
       console.error('Error posting data:', error);
     }
@@ -25,9 +31,13 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Implement signup logic here
-    await hanldeSignin();
-    signin()
-    navigate('/main');
+    const res = await hanldeSignin();
+    if(res?.status !== 200){
+      setError('The email or password you entered is incorrect. Please try again.');
+    }else{
+      signin()
+      navigate('/main');
+    }
   };
 
   useEffect(() => {
@@ -53,11 +63,30 @@ const Login: React.FC = () => {
               />
               <CustomTextField
                 label="Password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
                 required
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        edge="end"
+                        aria-label={showPassword ? 'Hide password' : 'Show password'}
+                        onClick={handleClickShowPassword}
+                        style={{ marginLeft: 8 }}
+                      >
+                        {showPassword ? <VisibilityOff fontSize="small" /> : <Visibility fontSize="small" />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
               />
+               {error && (
+                <Typography variant="body2" color="error" align="center" style={{ marginTop: '8px' }}>
+                  {error}
+                </Typography>
+              )}
               <Button style={{marginTop: "16px"}} type="submit" variant="contained" color="primary" fullWidth>Sign in</Button>
             </form>
             <Typography variant="body2" align="center" style={{ marginTop: "16px" }}>

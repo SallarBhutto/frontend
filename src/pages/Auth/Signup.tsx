@@ -1,10 +1,11 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { CustomTextField } from '../../components';
-import { Button, Typography, CardContent } from '@mui/material';
+import { CustomTextField, PasswordField } from '../../components';
+import { Button, Typography, CardContent, InputAdornment, Tooltip, IconButton } from '@mui/material';
 import { Background, Container, Card } from '../../styles/styles';
 import { post } from '../../utils/api';
 import { useAuth } from '../../context/AuthContext';
+import { Visibility, VisibilityOff, Info } from '@mui/icons-material';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const Signup: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value);
   const handleEmailChange = (e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value);
@@ -56,6 +58,8 @@ const Signup: React.FC = () => {
     }
   };
 
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+
   return (
     <Background>
       <Container>
@@ -76,19 +80,15 @@ const Signup: React.FC = () => {
                 onChange={handleEmailChange}
                 required
               />
-              <CustomTextField
+              <PasswordField
                 label="Password"
-                type="password"
                 value={password}
                 onChange={handlePasswordChange}
                 required
+                error={passwordError}
+                style={{marginTop: "16px"}}
               />
-              {passwordError && (
-                <Typography variant="body2" color="error" align="center" style={{ marginTop: '8px' }}>
-                  {passwordError}
-                </Typography>
-              )}
-              <Button style={{ marginTop: '16px' }} type="submit" variant="contained" color="primary" fullWidth>
+              <Button style={{ marginTop: '26px' }} type="submit" variant="contained" color="primary" fullWidth>
                 Sign up
               </Button>
             </form>

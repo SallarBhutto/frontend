@@ -11,8 +11,6 @@ const apiClient = axios.create({
   withCredentials: true
 });
 
-// axios.defaults.withCredentials = true;
-
 interface ApiResponse<T = any> {
   data: T;
   status: number;
@@ -26,7 +24,6 @@ export const get = async <T = any>(url: string, config?: AxiosRequestConfig): Pr
       status: response.status,
     };
   } catch (error) {
-    // Handle error accordingly
     throw error;
   }
 };
@@ -39,7 +36,6 @@ export const post = async <T = any>(url: string, data?: any, config?: AxiosReque
       status: response.status,
     };
   } catch (error) {
-    // Handle error accordingly
     throw error;
   }
 };
