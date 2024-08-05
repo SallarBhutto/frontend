@@ -6,20 +6,10 @@ const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true
 });
 
-// apiClient.interceptors.request.use(
-//     (config) => {
-//       const token = localStorage.getItem('token'); // Or wherever you store your token
-//       if (token) {
-//         config.headers.Authorization = `Bearer ${token}`;
-//       }
-//       return config;
-//     },
-//     (error) => {
-//       return Promise.reject(error);
-//     }
-//   );
+// axios.defaults.withCredentials = true;
 
 interface ApiResponse<T = any> {
   data: T;

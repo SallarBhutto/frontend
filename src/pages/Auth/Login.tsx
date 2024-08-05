@@ -1,23 +1,41 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CustomTextField } from '../../components';
 import { Button, Typography, CardContent } from '@mui/material';
 import { Background, Container, Card } from '../../styles/styles';
 import { useAuth } from '../../context/AuthContext';
+import { post } from '../../utils/api';
 
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
-  const {login} = useAuth();
+  const {signin, isAuthenticated} = useAuth();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const hanldeSignin = async () => {
+    try {
+      const response = await post('/auth/signin', { email: email, password: password});
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error posting data:', error);
+    }
+  }
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Implement signup logic here
-    login()
+    await hanldeSignin();
+    signin()
     navigate('/main');
   };
+
+  useEffect(() => {
+    if(isAuthenticated){
+      navigate("/main")
+    }
+  }, [])
+  
 
   return (
     <Background>

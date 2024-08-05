@@ -8,7 +8,7 @@ import { useAuth } from '../../context/AuthContext';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
-  const {login} = useAuth();
+  const {signin} = useAuth();
   const [username, setUsername] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -29,8 +29,9 @@ const Signup: React.FC = () => {
 
   const hanldeSignup = async () => {
     try {
-      const response = await post('/user', { username: username, email: email, password:password });
+      const response = await post('/auth/signup', { username: username, email: email, password:password });
       console.log('Response:', response.data);
+      signin();
     } catch (error) {
       console.error('Error posting data:', error);
     }
@@ -45,14 +46,10 @@ const Signup: React.FC = () => {
         return;
       }
   
-      // Clear any previous password error
       setPasswordError('');
-  
-      // Implement signup logic here
-      console.log({ username, email, password }); // Example of accessing form values
+
       await hanldeSignup();
-      // Assuming `login` is a function that performs login
-      login();
+
       navigate('/main');
     } catch (error) {
       console.error('Error handleSubmit data:', error);
@@ -106,3 +103,7 @@ const Signup: React.FC = () => {
 }
 
 export default Signup;
+function signinAfterSignup() {
+  throw new Error('Function not implemented.');
+}
+

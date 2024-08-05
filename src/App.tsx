@@ -16,8 +16,8 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
 const App: React.FC = () => {
   return (
-    <AuthProvider>
     <Router>
+    <AuthProvider>
       <Container>
         <Routes>
           <Route path="/login" element={
@@ -38,8 +38,8 @@ const App: React.FC = () => {
           <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
       </Container>
-    </Router>
     </AuthProvider>
+    </Router>
   );
 }
 
