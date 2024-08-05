@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { Container } from '@mui/material';
 import { Signup, Login, Home } from './pages';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
@@ -17,28 +16,26 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 const App: React.FC = () => {
   return (
     <Router>
-    <AuthProvider>
-      <Container>
-        <Routes>
-          <Route path="/login" element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
+      <AuthProvider>
+          <Routes>
+            <Route path="/login" element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+              } />
+            <Route path="/signup" element={
+              <PublicRoute>
+                <Signup />
+              </PublicRoute>
             } />
-          <Route path="/signup" element={
-            <PublicRoute>
-              <Signup />
-            </PublicRoute>
-          } />
-          <Route path="/main" element={
-             <PrivateRoute>
-                <Home />
-            </PrivateRoute>
-            } />
-          <Route path="*" element={<Navigate to="/login" />} />
-        </Routes>
-      </Container>
-    </AuthProvider>
+            <Route path="/main" element={
+              <PrivateRoute>
+                  <Home />
+              </PrivateRoute>
+              } />
+            <Route path="*" element={<Navigate to="/login" />} />
+          </Routes>
+      </AuthProvider>
     </Router>
   );
 }
