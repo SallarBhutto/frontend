@@ -1,25 +1,45 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { Container } from '@mui/material';
+import { Signup, Login, Home } from './pages';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
-function App() {
+const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
+};
+
+const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? <Navigate to="/main" /> : <>{children}</>;
+};
+
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload. cc
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+    <Router>
+      <Container>
+        <Routes>
+          <Route path="/login" element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+            } />
+          <Route path="/signup" element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          } />
+          <Route path="/main" element={
+             <PrivateRoute>
+                <Home />
+            </PrivateRoute>
+            } />
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+      </Container>
+    </Router>
+    </AuthProvider>
   );
 }
 
